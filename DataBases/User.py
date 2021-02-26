@@ -1,16 +1,14 @@
-from DatabaseContextManager import DatabaseContextManager
+from DataBases.DatabaseContextManager import DatabaseContextManager
 
 
 def create_table_user():
     query = """CREATE TABLE `user`(
     `id` integer NOT NULL AUTO_INCREMENT,
-    `spending_id` integer,
     `grouping_id` integer,
-    `name` varchar(255),
+    `username` varchar(255),
     `salary` DECIMAL(50, 2),
     `balance` DECIMAL(50, 2),
     PRIMARY KEY (id),
-    FOREIGN KEY (spending_id) REFERENCES spending(id),
     FOREIGN KEY (grouping_id) REFERENCES grouping(id));"""
     with DatabaseContextManager() as db:
         cursor = db.cursor()
@@ -19,7 +17,7 @@ def create_table_user():
 
 def create_user(spending_id, grouping_id, name, salary, balance):
     query = """INSERT INTO user
-                (spending_id, grouping_id, name,salary, balance)
+                (spending_id, grouping_id, username,salary, balance)
                     VALUES(%s, %s, %s, %s, %s)
     """
     parameters = [spending_id, grouping_id, name, salary, balance]
